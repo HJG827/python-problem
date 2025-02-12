@@ -39,13 +39,35 @@
 
 T = int(input())
 
-for tc in (1, T+1):
+for tc in range(1, T+1):
     arr = [list(map(int, input(). split())) for _ in range(9)]
+    result = 1
 
     for r in range(9):
+        row_check = set()
+        col_check=set()
+
         for c in range(9):
+            if arr[r][c] in row_check:
+                result = 0
+                break
+            row_check.add(arr[r][c])
 
+            if arr[c][r] in col_check:
+                result = 0
+                break
+            col_check.add(arr[c][r])
 
+    for r_start in range(0,9,3):
+        for c_start in range(0, 9,3):
+            box_check = set()
 
+            for r in range(3):
+                for c in range(3):
+                    number = arr[r_start+r][c_start+c]
+                    if number in box_check:
+                        result = 0
+                        break
+                box_check.add(number)
 
-    print(f'#{tc} ')
+    print(f'#{tc} {result}')

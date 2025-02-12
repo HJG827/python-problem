@@ -30,15 +30,24 @@
 
 
 def lazor_cut():
-    arr = list(input())
-    N = len(arr)
-    for i in range(N):
-        if arr[i] == "(":
-            arr[i] = 1
-        else:
-            arr[i] = 2
+    stick_lazor = input()  # 괄호 문자열 입력받기
+    stick_stack = []  # 쇠막대기를 저장할 스택
+    total_pieces = 0  # 잘린 조각 개수 저장
 
-    print(arr)
+    for i in range(len(stick_lazor)):
+        if stick_lazor[i] == "(":
+            stick_stack.append("(")  # 스택에 추가 (쇠막대기 시작!)
+        else:
+            stick_stack.pop()  # 스택에서 하나 제거 (쇠막대기 끝!)
+
+            if stick_lazor[i - 1] == "(":
+                # 레이저 → 스택에 남아 있는 쇠막대기 개수만큼 조각 추가!
+                total_pieces += len(stick_stack)
+            else:
+                # 쇠막대기의 끝 → 조각 1개 추가!
+                total_pieces += 1
+
+    print(total_pieces)  # 최종 조각 개수 출력
 
 
 lazor_cut()
