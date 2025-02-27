@@ -46,28 +46,39 @@ N = 5, K = 3 이고, 퍼즐의 모양이 아래 그림과 같이 주어졌을 �
 
 T = int(input())
 
-for case_num in range(1, T+1):
+for tc in range(1, T+1):
     N, K = map(int, input().split())
     arr = [list(map(int, input().split())) for _ in range(N)]
 
-    r_word = []
-    c_word = []
-    
+    word_count = 0
+
     for r in range(N):
+        r_count = 0
         for c in range(N):
-            word = arr[r][c]
-            r_count = 0
-            c_count = 0
+            space1 = arr[r][c]
+            if space1 == 1:
+                r_count += 1
+            if space1 == 0:
+                if r_count == K:
+                    word_count += 1
+                r_count = 0
+        if r_count == K:
+            word_count += 1
 
-            for i in range(N):
-                if arr[i][c]:
-                    r_count += 1
-            r_word.append(r_count)
-            for j in range(N):
-                if arr[r][j]:
-                    r_count += 1
-            c_word.append(c_count)
+    for r in range(N):
+        c_count = 0
+        for c in range(N):
+            space2 = arr[c][r]
+            if space2 == 1:
+                c_count += 1
+            if space2 == 0:
+                if c_count == K:
+                    word_count += 1
+                c_count = 0
+        if c_count == K:
+            word_count += 1
 
-    print(r_word, c_word)
+
+    print(f'#{tc} {word_count}')
 
             
