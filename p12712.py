@@ -37,52 +37,47 @@ N x N 배열 안의 숫자는 해당 영역에 존재하는 파리의 개체 수
 #2 157
 """
 
-
-def catch_flies():
-    N, M = map(int, input().split())
-    arr = [list(map(int, input().split())) for _ in range(N)]
-
-    cross_r = [0, 1, 0, -1]
-    cross_c = [1, 0, -1, 0]
-
-    diag_r = [-1, -1, 1, 1]
-    diag_c = [1, -1, -1, 1]
+def catch_flies(N, M, arr):
     max_cross = 0
     max_diag = 0
 
     for r in range(N):
         for c in range(N):
-            cross_flies = 0
-            diag_flies = 0
-
             cross_flies = arr[r][c]
-            for direction in range(4):
-                for distance in range(1, M):
-                    next_r = r + cross_r[direction] * distance
-                    next_c = c + cross_c[direction] * distance
-
-                    if 0 <= next_r < N and 0 <= next_c < N:
-                        cross_flies += arr[next_r][next_c]
+            for dr, dc in ([0,1], [1,0], [0, -1],[-1, 0]):
+                for power in range(1, M):
+                    nr = r + dr * power
+                    nc = c + dc * power
+                    if (
+                        0 <= nr < N
+                        and 0 <= nc < N
+                    ):
+                        cross_flies += arr[nr][nc]
             if cross_flies > max_cross:
                 max_cross = cross_flies
 
-            diag_flies = arr[r][c]
-            for direction in range(4):
-                for distance in range(1, M):
-                    next_r = r + diag_r[direction] * distance
-                    next_c = c + diag_c[direction] * distance
-
-                    if 0 <= next_r < N and 0 <= next_c < N:
-                        diag_flies += arr[next_r][next_c]
-
+    for r in range(N):
+        for c in range(N):
+            diag_flies = arr[r][c]  
+            for dr, dc in ([1, 1], [1, -1],[-1, -1], [-1, 1]):
+                for power in range(1, M):
+                    nr = r + dr * power
+                    nc = c + dc * power
+                    if (
+                        0 <= nr < N
+                        and 0 <= nc < N
+                    ):
+                        diag_flies += arr[nr][nc]
             if diag_flies > max_diag:
                 max_diag = diag_flies
 
-    result = max(max_cross, max_diag)
-    return result
+    return max(max_cross, max_diag)
 
 
 T = int(input())
 
 for tc in range(1, T + 1):
-    print(f"#{tc} {catch_flies()}")
+    N, M = map(int, input().split())
+    arr = [list(map(int, input().split())) for _ in range(N)]
+
+    print(f"#{tc} {catch_flies(N, M, arr)}")

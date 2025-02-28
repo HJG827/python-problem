@@ -69,6 +69,7 @@ for tc in range(1, T+1):
 
     
     result = -1
+    
     for score1 in range(K+1):
         for score2 in range(score1+1, K+1):
             class1 = sum(students[i] for i in range(score1))

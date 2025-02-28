@@ -35,12 +35,19 @@ def number_check(number):
         number //= 10
     return 1
 
+def number_check2(number):
+    num_str = str(number)
+    for i in range(len(num_str) -1):
+        if ord(num_str[i]) > ord(num_str[i+1]):
+            return 0
+    return 1
+
 def get_numbers(N, arr):
-    result = 0
+    result = -1
     for i in range(N-1):
         for j in range(i+1, N):
             number = arr[i] * arr[j]
-            if number_check(number) and number>result:
+            if number_check(number) and number > result:
                 result = number
 
     return result
@@ -50,4 +57,5 @@ T = int(input())
 for tc in range(1, T+1):
     N = int(input())
     arr = list(map(int, input().split()))
+
     print(f'#{tc} {get_numbers(N, arr)}')
